@@ -17,23 +17,32 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Column(
               children: <Widget>[
+                SizedBox(height: 30.0),
                 Image.asset('assets/logo.png', height: 100.0, width: 100.0,),
-                SizedBox(height: 16.0),
-                Text('Stay Hydrated'),
-                SizedBox(height: 120.0),
+                SizedBox(height: 65.0),
+                Text('you just got zucced', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),),
+                SizedBox(height: 65.0),
                 TextField(
                   decoration: InputDecoration(
-                    //filled: true,
-                    //fillColor: Colors.blueAccent[100],
-                    labelText: "Username"
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: "Username",
+                    //errorText: 'Username already exists.',
+                    labelStyle: TextStyle(fontSize: 13.0)
                   ),
                   controller: _usernameController,
+                  enableInteractiveSelection: true,
                 ),
                 SizedBox(height: 50.0),
                 TextField(
                   decoration: InputDecoration(
-                    //filled: true,
-                    labelText: "Password"
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    labelText: "Password",
+                    labelStyle: TextStyle(fontSize: 13.0),
+                    //errorText: "Password must be 6 characters long."
                   ),
                   controller: _passwordController,
                   obscureText: true,
@@ -46,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40.0,
                   child:
                     FlatButton(
-                      child: Text('Login'),
-                      color: Colors.blue[300],
+                      child: Text('Login', style: TextStyle(color: Colors.white)),
+                      color: Colors.blue[700],
                       disabledColor: Colors.grey[200],
                       shape: RoundedRectangleBorder(borderRadius: new BorderRadius.all(new Radius.circular(5)),),
                       onPressed:  (){
@@ -57,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(0.0, 6.0, 8.0, 0.0),
-                  child: Text('Forgot Password?', style: TextStyle(fontSize: 14.0), textAlign: TextAlign.right,)
+                  child: Text('Forgot Password?', style: TextStyle(fontSize: 14.0, decoration: TextDecoration.underline), textAlign: TextAlign.right,)
                 ),
                 SizedBox(height: 100.0),
                 Container(

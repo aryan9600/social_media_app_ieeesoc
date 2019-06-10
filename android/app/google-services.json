@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "530149892070",
+    "firebase_url": "https://zucclogin.firebaseio.com",
+    "project_id": "zucclogin",
+    "storage_bucket": "zucclogin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530149892070:android:21450d30d564b398",
+        "android_client_info": {
+          "package_name": "com.example.social_media_app_ieeesoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530149892070-1v3hjd8h67piampuk69brb9ic3etmttg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK24BH9zi0zFxVl37fS1uDVf8o9PJy8w0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530149892070-1v3hjd8h67piampuk69brb9ic3etmttg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

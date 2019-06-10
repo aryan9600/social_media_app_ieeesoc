@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:social_media_app_ieeesoc/login.dart';
+import 'package:social_media_app_ieeesoc/login_page.dart';
 
 import 'package:social_media_app_ieeesoc/main.dart';
 

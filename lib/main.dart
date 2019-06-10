@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
-import 'auth.dart';
+import 'root_splash.dart';
 
 void main() => runApp(new Zucced());
 
@@ -9,7 +8,7 @@ class Zucced extends StatelessWidget{
   Widget build(BuildContext context){
     return new MaterialApp(
       title: 'you just got zucced',
-      home: LoginPage(auth: new Auth(),)
+      home: RootSplash()
     );
   }
 }

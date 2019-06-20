@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'auth.dart';
 
-
 class HomePage extends StatelessWidget{
   HomePage({this.auth, this.onSignedOut});
   final BaseAuth auth;
   final VoidCallback onSignedOut;
 
-  void _signOut() async{
+  void _signOut(){
     try{
-      await auth.signOut();
+      //await auth.signOut();
       onSignedOut();
+      print('yo wtf');
     }
     catch(e){
       print(e);
@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget{
         actions: <Widget>[
           FlatButton(
             child: Text('Logout', style: TextStyle(fontSize: 17.0, color: Colors.white)),
-            onPressed: () => _signOut,
+            onPressed: _signOut
           )
         ],
       ),

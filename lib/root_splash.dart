@@ -21,12 +21,12 @@ class _RootSplashState extends State<RootSplash>{
 
   initState() {
     super.initState();
-    widget.auth.currentUser().then((userId){
+    widget.auth.currentUser().then((token){
       setState(() {
-      authStatus = userId == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
+      authStatus = token == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
+      });
     });
-  });}
-
+  }
   void _signedIn(){
     setState(() {
       authStatus = AuthStatus.signedIn;
@@ -44,15 +44,18 @@ class _RootSplashState extends State<RootSplash>{
   Widget build(BuildContext context) {
     switch(authStatus){
       case AuthStatus.notSignedIn:
-        return new LoginPage(
-          auth: widget.auth,
-          onSignedIn: _signedIn,);
-      case AuthStatus.signedIn:
-        return new HomePage(
-          auth: widget.auth,
-          onSignedOut: _signedOut,
+        /*Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage(auth: widget.auth, onSignedIn: _signedIn,)),
         );
+        break;*/
+        return new LoginPage(auth: widget.auth, onSignedIn: _signedIn,);
+      case AuthStatus.signedIn:
+        /*Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage(auth: widget.auth, onSignedOut: _signedOut,)),
+        );*/
+        return new HomePage(auth: widget.auth, onSignedOut: _signedOut,);
     }
-    
   }
 }

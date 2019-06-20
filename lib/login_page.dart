@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth.dart';
+import 'user_class.dart';
 
 class LoginPage extends StatefulWidget{
   LoginPage({this.auth, this.onSignedIn});
@@ -14,13 +15,21 @@ class LoginPage extends StatefulWidget{
     register
   }
 
-class _LoginPageState extends State<LoginPage>{
   String _email;
+  String _username;
   String _password;
+  var userLogin = new User(username: _username, email: _email, password: _password);
+  var outeruserLogin = new OuterUser(user: userLogin); 
+  String userToken; 
+
+class _LoginPageState extends State<LoginPage>{
+  //_LoginPageState({Key key, this.outeruserLogin}) : super(key: key);
+
   final formKey = new GlobalKey<FormState>();
   FormType _formType = FormType.login;
   TextEditingController _usernameController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
+  TextEditingController _emailController = new TextEditingController();
 
   bool validateAndSave(){
     final form = formKey.currentState;
@@ -37,12 +46,14 @@ class _LoginPageState extends State<LoginPage>{
     if(validateAndSave()){
       try{
         if(_formType == FormType.login) {
-          String userId = await widget.auth.signInWithEmailAndPassword(_email, _password);
-          print('signed in $userId');
+          OuterUser userResponse = await widget.auth.signIn(outeruserLogin);
+          userToken = userResponse.user.token;
+          print(userToken);
         }
         else{
-          String userId = await widget.auth.createUserWithEmailAndPassword(_email, _password);
-          print('registered $userId');
+          OuterUser userResponse = await widget.auth.createUser(outeruserLogin);
+          userToken = userResponse.user.token;
+          print(userToken);
         }
         widget.onSignedIn();
       }
@@ -68,7 +79,7 @@ class _LoginPageState extends State<LoginPage>{
 
   List<Widget> usernamePassword(){
     return[
-       TextFormField(
+      TextFormField(
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
@@ -78,11 +89,26 @@ class _LoginPageState extends State<LoginPage>{
           labelStyle: TextStyle(fontSize: 13.0)
         ),
         controller: _usernameController,
+        validator: (val) => val.isEmpty ? 'Username can\'t be empty.' : null,
+        enableInteractiveSelection: true,
+        onSaved: (val) => _username = val,
+      ),
+      SizedBox(height: 20.0),
+      TextFormField(
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(),
+          labelText: "Email",
+          //errorText: 'Username already exists.',
+          labelStyle: TextStyle(fontSize: 13.0)
+        ),
+        controller: _emailController,
         validator: (val) => val.isEmpty ? 'Email can\'t be empty.' : null,
         enableInteractiveSelection: true,
         onSaved: (val) => _email = val,
       ),
-      SizedBox(height: 50.0),
+      SizedBox(height: 20.0),
       TextFormField(
         decoration: InputDecoration(
           filled: true,
@@ -90,15 +116,17 @@ class _LoginPageState extends State<LoginPage>{
           border: OutlineInputBorder(),
           labelText: "Password",
           labelStyle: TextStyle(fontSize: 13.0),
-           //errorText: "Password must be 6 characters long."
+          //errorText: "Password must be 6 characters long."
         ),
         controller: _passwordController,
         validator: (val) => val.isEmpty ? 'Password can\'t be empty.' : null,
         onSaved: (val) => _password = val,
         obscureText: true,
       ),
+      SizedBox(height:20),
     ];
   }
+  
 
   List<Widget> submitButtons(){
     if(_formType == FormType.login){
@@ -125,7 +153,7 @@ class _LoginPageState extends State<LoginPage>{
             )
           ],
         ),
-        SizedBox(height: 80.0),
+        SizedBox(height: 44.0),
         Container(
           padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
           child: Text('Dont have an account?', style: TextStyle(fontSize: 14.0), textAlign: TextAlign.center),
@@ -153,7 +181,7 @@ class _LoginPageState extends State<LoginPage>{
               onPressed: validateAndSubmit
             ),
         ),
-        SizedBox(height: 127.0),
+        SizedBox(height: 92.0),
         Container(
           padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
           child: Text('Already have an account?', style: TextStyle(fontSize: 14.0), textAlign: TextAlign.center),
@@ -161,7 +189,8 @@ class _LoginPageState extends State<LoginPage>{
         Container(
           child: FlatButton(
             child: Text('Login', style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, decoration: TextDecoration.underline), textAlign: TextAlign.center),
-            onPressed: moveToLogin,)
+            onPressed: moveToLogin,
+            materialTapTargetSize: MaterialTapTargetSize.padded,)
         )      
       ];
     }
@@ -178,7 +207,7 @@ class _LoginPageState extends State<LoginPage>{
             Image.asset('assets/logo.png', height: 100.0, width: 100.0,),
             SizedBox(height: 65.0),
             Text('you just got zucced', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),textAlign: TextAlign.center,),
-            SizedBox(height: 65.0),
+            SizedBox(height: 45.0),
             Form(
               key: formKey,
               child: new Column(
